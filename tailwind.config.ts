@@ -47,6 +47,15 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        kenya: {
+          green: "hsl(var(--kenya-green))",
+          red: "hsl(var(--kenya-red))",
+          black: "hsl(var(--kenya-black))",
+        },
+        county: {
+          hover: "hsl(var(--county-hover))",
+          selected: "hsl(var(--county-selected))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -84,6 +93,19 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "bounce-slow": "bounce 2s infinite",
+      },
+      backgroundImage: {
+        "gradient-kenya": "var(--gradient-kenya)",
+        "gradient-map": "var(--gradient-map)",
+      },
+      boxShadow: {
+        "map": "var(--shadow-map)",
+        "popup": "var(--shadow-popup)",
+      },
+      transitionDuration: {
+        "map": "var(--animation-duration)",
       },
     },
   },
