@@ -35,6 +35,15 @@ export const CesiumMap = ({ className }: CesiumMapProps) => {
       selectionIndicator: false,
     });
 
+    // Add Bing Aerial imagery
+    const addBingImagery = async () => {
+      if (viewer.current) {
+        const layer = viewer.current.imageryLayers.addImageryProvider(
+          await Cesium.IonImageryProvider.fromAssetId(3)
+        );
+      }
+    };
+
     // Set initial camera position over Kenya
     viewer.current.camera.setView({
       destination: Cesium.Cartesian3.fromDegrees(37.9062, 0.0236, 1500000),
@@ -45,7 +54,8 @@ export const CesiumMap = ({ className }: CesiumMapProps) => {
       }
     });
 
-    // Load Kenya counties GeoJSON
+    // Add Bing imagery and load Kenya counties
+    addBingImagery();
     loadKenyaCounties();
 
     // Cleanup
