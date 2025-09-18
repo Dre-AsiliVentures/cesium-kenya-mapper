@@ -99,24 +99,27 @@ export const CesiumMap = ({ className }: CesiumMapProps) => {
   const setEntityToSelected = (entity: Cesium.Entity) => {
     if (!entity.polygon) return;
     console.log("Applying selected style to entity:", entity.id);
+    
+    // Set bright yellow fill and outline
     entity.polygon.material = new Cesium.ColorMaterialProperty(
-      Cesium.Color.fromCssColorString("#fde047").withAlpha(0.3)
+      Cesium.Color.YELLOW.withAlpha(0.4)
     );
     entity.polygon.outline = new Cesium.ConstantProperty(true);
     entity.polygon.outlineColor = new Cesium.ConstantProperty(Cesium.Color.YELLOW);
-    entity.polygon.outlineWidth = new Cesium.ConstantProperty(3);
+    entity.polygon.outlineWidth = new Cesium.ConstantProperty(4);
 
-    // Add polyline as fallback for thicker outline
+    // Add additional polyline for extra thick yellow outline
     const hierarchy = entity.polygon.hierarchy?.getValue(Cesium.JulianDate.now());
     if (hierarchy && hierarchy.positions) {
       const outlineId = `${entity.id}-outline`;
       const existing = viewer.current!.entities.getById(outlineId);
       if (existing) viewer.current!.entities.remove(existing);
+      
       viewer.current!.entities.add({
         id: outlineId,
         polyline: {
           positions: hierarchy.positions,
-          width: 3,
+          width: 5,
           material: Cesium.Color.YELLOW,
           clampToGround: true,
         },
