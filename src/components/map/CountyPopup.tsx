@@ -1,3 +1,4 @@
+// src/components/map/CountyPopup.tsx
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,10 +9,9 @@ import { motion } from "framer-motion";
 interface CountyPopupProps {
   county: CountyData;
   onClose: () => void;
-  position: { x: number; y: number };
 }
 
-export const CountyPopup = ({ county, onClose, position }: CountyPopupProps) => {
+export const CountyPopup = ({ county, onClose }: CountyPopupProps) => {
   // Mock additional data for demonstration
   const mockData = {
     population: Math.floor(Math.random() * 2000000) + 100000,
@@ -22,78 +22,76 @@ export const CountyPopup = ({ county, onClose, position }: CountyPopupProps) => 
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.9, y: 20 }}
-      transition={{ duration: 0.2, ease: "easeOut" }}
-      className="fixed z-50 pointer-events-auto"
-      style={{
-        left: Math.min(position.x, window.innerWidth - 400),
-        top: Math.min(position.y, window.innerHeight - 300),
-      }}
+      initial={{ opacity: 0, scale: 0.98, x: 100 }}
+      animate={{ opacity: 1, scale: 1, x: 0 }}
+      exit={{ opacity: 0, scale: 0.98, x: 100 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className="fixed top-0 right-6 z-50 h-full flex items-center pointer-events-auto"
+      style={{ width: '70vw', maxWidth: '900px',color: 'blue'}}
     >
-      <Card className="w-96 shadow-popup bg-card/95 backdrop-blur-sm border-primary/20">
+      {/* Arrow pointing left to county */}
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <polygon points="48,24 0,0 0,48" fill="#22c55e" opacity="0.7" />
+        </svg>
+      </div>
+      <Card className="w-full h-[80vh] shadow-popup bg-card/95 backdrop-blur-sm border-primary/20 flex flex-col justify-center">
         <CardHeader className="relative pb-3">
           <div className="flex items-start justify-between">
             <div>
-              <CardTitle className="text-lg font-bold text-kenya-green flex items-center gap-2">
-                <MapPin className="h-5 w-5" />
+              <CardTitle className="text-2xl font-bold text-kenya-green flex items-center gap-2">
+                <MapPin className="h-6 w-6" />
                 {county.shapeName} County
               </CardTitle>
-              <Badge variant="secondary" className="mt-1 text-xs">
+              <Badge variant="secondary" className="mt-1 text-base">
                 {county.shapeISO}
               </Badge>
             </div>
             <Button
               variant="ghost"
-              size="sm"
+              size="lg"
               onClick={onClose}
-              className="h-8 w-8 p-0 hover:bg-destructive/10"
+              className="h-10 w-10 p-0 hover:bg-destructive/10"
             >
-              <X className="h-4 w-4" />
+              <X className="h-5 w-5" />
             </Button>
           </div>
         </CardHeader>
-        
-        <CardContent className="space-y-4">
-          <p className="text-sm text-muted-foreground leading-relaxed">
+        <CardContent className="space-y-6">
+          <p className="text-lg text-muted-foreground leading-relaxed">
             {mockData.description}
           </p>
-          
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-8">
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm">
-                <Users className="h-4 w-4 text-kenya-green" />
+              <div className="flex items-center gap-2 text-base">
+                <Users className="h-5 w-5 text-kenya-green" />
                 <span className="font-medium">Population</span>
               </div>
-              <p className="text-lg font-bold text-foreground">
+              <p className="text-2xl font-bold text-foreground">
                 {mockData.population.toLocaleString()}
               </p>
             </div>
-            
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm">
-                <Grid3x3 className="h-4 w-4 text-kenya-green" />
+              <div className="flex items-center gap-2 text-base">
+                <Grid3x3 className="h-5 w-5 text-kenya-green" />
                 <span className="font-medium">Area</span>
               </div>
-              <p className="text-lg font-bold text-foreground">
+              <p className="text-2xl font-bold text-foreground">
                 {mockData.area.toLocaleString()} km²
               </p>
             </div>
           </div>
-          
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm">
-              <Building2 className="h-4 w-4 text-kenya-green" />
+            <div className="flex items-center gap-2 text-base">
+              <Building2 className="h-5 w-5 text-kenya-green" />
               <span className="font-medium">County Headquarters</span>
             </div>
-            <p className="text-base font-medium text-foreground">
+            <p className="text-lg font-medium text-foreground">
               {mockData.capital}
             </p>
           </div>
-          
-          <div className="pt-2 border-t border-border">
-            <Badge variant="outline" className="text-xs">
+          <div className="pt-4 border-t border-border">
+            <Badge variant="outline" className="text-base">
               Administrative Level: {county.shapeType}
             </Badge>
           </div>
